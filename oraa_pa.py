@@ -1,6 +1,6 @@
 def numToWords():
-	num = input('Enter number: ')
-	temp_num = str(num)
+	temp_num = raw_input('Enter number: ')
+	
 	str_num = ''
 	length = len(temp_num)
 	pos =0
@@ -18,14 +18,15 @@ def numToWords():
 	  		
 	x=str_num
 	while pos < 7 :
-		#if x[pos] != '0': 
+		
+		if pos == 4 and (x[pos-1]!='0' or x[pos-2]!='0' or x[pos-3]!='0') and length>3:
+			str_form = str_form+'thousand '
+
 		if x[pos]=='0':
 			if pos == 6 and length == 1:
 				str_form = str_form + 'zero'
 		
 		elif pos != 2 and pos != 5:				#yung walng -ty or -teen
-			if pos == 4 and (x[pos-1]!=0 or x[pos-2]!=0 or x[pos-3]!=0) and length>3:
-				str_form = str_form+'thousand '
 
 			if x[pos]=='1':	
 				str_form = str_form+'one '
@@ -114,9 +115,6 @@ def numToWords():
 						str_form=str_form+'eight '
 					elif x[pos]=='9': 
 						str_form=str_form+'nine '
-
-			#if pos == 3 and length >=3:
-			#	str_form=str_form+'thousand '
 					
 		pos = pos+1
 
@@ -129,29 +127,83 @@ def wordsToNum(word):
 	word = word.split()
 	gen_num = 0		#total value
 	temp = 0		#current integer
-	for i in word:
-		if i == 'one':
-			temp=1
-		elif i == 'two':
-			temp=2
-		elif i == 'three':
-			temp=3
-		elif i == 'four':
-			temp=4
-		elif i == 'five':
-			temp=5
-		elif i == 'six':
-			temp=6
-		elif i == 'seven':
-			temp=7
-		elif i == 'eight':
-			temp=8
-		elif i == 'nine':
-			temp=9
-		
-		if i == 'million':
-		elif i == 't':	
+	mill_num=0
+	hund_thou = 0
+	hund = 0
+	wLen = len(word)
+	flag=0		# is equal to 1 if there should be no more thousands
+	
+	i=0
 
+	while i < wLen:
+		
+		if word[i] == 'one':
+			temp+=1
+		elif word[i] == 'two':
+			temp+=2
+		elif word[i] == 'three':
+			temp+=3
+		elif word[i] == 'four':
+			temp+=4
+		elif word[i] == 'five':
+			temp+=5
+		elif word[i] == 'six':
+			temp+=6
+		elif word[i] == 'seven':
+			temp+=7
+		elif word[i] == 'eight':
+			temp+=8
+		elif word[i] == 'nine':
+			temp+=9
+		elif word[i] == 'ten':
+			temp += 10
+		elif word[i] == 'eleven':
+			temp += 11
+		elif word[i] == 'twelve':
+			temp += 12
+		elif word[i] == 'thirteen':
+			temp += 13
+		elif word[i] == 'fourteen':
+			temp += 14
+		elif word[i] == 'fifteen':
+			temp += 15
+		elif word[i] == 'sixteen':
+			temp += 16
+		elif word[i] == 'seventeen':
+			temp += 17
+		elif word[i] == 'eighteen':
+			temp += 18
+		elif word[i] == 'nineteen':
+			temp += 19
+		elif word[i] == 'twenty':
+			temp += 20
+		elif word[i] == 'thirty':
+			temp += 30
+		elif word[i] == 'forty':
+			temp += 40
+		elif word[i] == 'fifty':
+			temp += 50
+		elif word[i] == 'sixty':
+			temp += 60
+		elif word[i] == 'seventy':
+			temp += 70
+		elif word[i] == 'eighty':
+			temp += 80
+		elif word[i] == 'ninety':
+			temp += 90	
+		elif word[i] == 'million':
+			mill_num= temp*1000000
+			temp=0
+		elif word[i] == 'hundred':
+			temp= temp*100
+		elif word[i] == 'thousand':
+			hund_thou = hund*1000
+			hund=0
+			temp=0
+		hund = temp; 
+		i+=1	
+	
+	gen_num= mill_num+hund_thou+hund
 	print gen_num
 	return
 
@@ -166,7 +218,6 @@ print '[1] Number to Word'
 print '[2] Word to Number'
 print '[3] Word to Currency'
 print '[4] Number Delimitered '
-print '[0] Exit '
 ch = input('choice: ')
 
 
