@@ -1,3 +1,5 @@
+import sys
+
 def numToWords():
 	temp_num = raw_input('Enter number: ')
 	
@@ -207,8 +209,6 @@ def wordsToNum(word):
 	print gen_num
 	return
 
-def wordsToCurrency():
-	return
 def numberDelimitered():
 	return
 
@@ -223,11 +223,20 @@ ch = input('choice: ')
 
 if(ch==1):
 	 numToWords();
+	 
 elif(ch==2):
 	word= raw_input("Enter input: ")
 	wordsToNum(word); 
+
 elif(ch==3):
-	wordsToCurrency();
+	word= raw_input("Enter number in words: ")
+	cur= raw_input("Enter currency: ")
+	if cur=='USD' or cur=='JPY' or cur == 'PHP':
+		sys.stdout.write(cur)
+		wordsToNum(word)
+	else:
+		print 'Invalid!'
+
 elif(ch==4):
 	numberDelimitered();
 else:
