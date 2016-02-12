@@ -127,9 +127,34 @@ def numToWords():
 
 def wordsToNum(word):
 	word = word.split()
+	gen_num = 0		#total value
+	temp = 0		#current integer
 	for i in word:
-		print i
+		if i == 'one':
+			temp=1
+		elif i == 'two':
+			temp=2
+		elif i == 'three':
+			temp=3
+		elif i == 'four':
+			temp=4
+		elif i == 'five':
+			temp=5
+		elif i == 'six':
+			temp=6
+		elif i == 'seven':
+			temp=7
+		elif i == 'eight':
+			temp=8
+		elif i == 'nine':
+			temp=9
+		
+		if i == 'million':
+		elif i == 't':	
+
+	print gen_num
 	return
+
 def wordsToCurrency():
 	return
 def numberDelimitered():
