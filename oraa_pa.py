@@ -210,6 +210,25 @@ def wordsToNum(word):
 	return
 
 def numberDelimitered():
+	temp = raw_input('Enter number: ')
+	delimiter = raw_input('Enter delimiter: ')
+	jumps = input('Enter # of jumps: ')
+	temp= str(temp)
+	rev=''
+	i=0
+	
+
+	for i in range(0, len(temp)):			#reverse number input
+		rev=temp[i]+rev
+	
+	temp=''
+	for i in range(0, len(rev)):
+		if jumps== i:
+			#print delimiter+i
+			temp= delimiter+temp
+		temp= rev[i]+temp
+
+	print temp
 	return
 
 
@@ -223,7 +242,7 @@ ch = input('choice: ')
 
 if(ch==1):
 	 numToWords();
-	 
+
 elif(ch==2):
 	word= raw_input("Enter input: ")
 	wordsToNum(word); 
