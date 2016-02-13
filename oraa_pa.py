@@ -1,8 +1,9 @@
 import sys
 
-def numToWords():
-	temp_num = raw_input('Enter number: ')
-	
+def numToWords(temp_num):	
+	if len(temp_num)>7:
+		print 'Invalid: input can only have at most 7 digits'
+		return
 	str_num = ''
 	length = len(temp_num)
 	pos =0
@@ -209,14 +210,18 @@ def wordsToNum(word):
 	print gen_num
 	return
 
-def numberDelimitered():
-	temp = raw_input('Enter number: ')
-	delimiter = raw_input('Enter delimiter: ')
-	jumps = input('Enter # of jumps: ')
+def wordsToCurrency(word, cur):
+	if cur=='USD' or cur=='JPY' or cur == 'PHP':
+		sys.stdout.write(cur)
+		wordsToNum(word)
+	else:
+		print 'Invalid!'
+
+	return
+def numberDelimitered(temp, delimiter, jumps):
 	temp= str(temp)
 	rev=''
 	i=0
-	
 
 	for i in range(0, len(temp)):			#reverse number input
 		rev=temp[i]+rev
@@ -224,8 +229,8 @@ def numberDelimitered():
 	temp=''
 	for i in range(0, len(rev)):
 		if jumps== i:
-			#print delimiter+i
 			temp= delimiter+temp
+			
 		temp= rev[i]+temp
 
 	print temp
@@ -241,7 +246,8 @@ ch = input('choice: ')
 
 
 if(ch==1):
-	 numToWords();
+	temp_num = raw_input('Enter number: ')
+	numToWords(temp_num);
 
 elif(ch==2):
 	word= raw_input("Enter input: ")
@@ -250,14 +256,14 @@ elif(ch==2):
 elif(ch==3):
 	word= raw_input("Enter number in words: ")
 	cur= raw_input("Enter currency: ")
-	if cur=='USD' or cur=='JPY' or cur == 'PHP':
-		sys.stdout.write(cur)
-		wordsToNum(word)
-	else:
-		print 'Invalid!'
+
+	wordsToCurrency(word, cur)
 
 elif(ch==4):
-	numberDelimitered();
+	temp = raw_input('Enter number: ')
+	delimiter = raw_input('Enter delimiter: ')
+	jumps = input('Enter # of jumps: ')
+	numberDelimitered(temp, delimiter, jumps);
 else:
 	print 'Invalid!'
 
