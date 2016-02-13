@@ -1,35 +1,39 @@
 import sys
 
-def numToWords(temp_num):	
-	if len(temp_num)>7:
+"""
+	numToWords() accepts an input number and outputs its equivalent in words
+	temp_num : input by the user
+"""
+def numToWords(temp_num):		
+	if len(temp_num)>7:						#if number inputed is greater than 7 digits: invalid
 		print 'Invalid: input can only have at most 7 digits'
 		return
-	str_num = ''
-	length = len(temp_num)
-	pos =0
-	j=0
+	str_num = ''			#word equivalent of temp_num
+	length = len(temp_num)	#input length
+	pos =0					#current position
+	j=0		
 
 	str_form = ''
-	for i in range(6, -1, -1):
-		if i>length-1:
-			str_num=str_num+'0'
+	for i in range(6, -1, -1):			#places input value in an array of 7 elements(for each digit)
+		if i>length-1:					#if current length is less than current max number of digits
+			str_num=str_num+'0'			
 		else:
-			while j!=length:
-				str_num=str_num+temp_num[j]
+			while j!=length:			#while input is not fully transferred to str_num 
+				str_num=str_num+temp_num[j]	
 				j=j+1
 				
 	  		
-	x=str_num
-	while pos < 7 :
+	x=str_num			#holds input in its 7 digit representation
+	while pos < 7 :		
 		
-		if pos == 4 and (x[pos-1]!='0' or x[pos-2]!='0' or x[pos-3]!='0') and length>3:
-			str_form = str_form+'thousand '
+		if pos == 4 and (x[pos-1]!='0' or x[pos-2]!='0' or x[pos-3]!='0') and length>3:	
+			str_form = str_form+'thousand '				#if at 4th pos and 3 previous digits are not == 0
 
-		if x[pos]=='0':
+		if x[pos]=='0':									#if number is 0
 			if pos == 6 and length == 1:
 				str_form = str_form + 'zero'
 		
-		elif pos != 2 and pos != 5:				#yung walng -ty or -teen
+		elif pos != 2 and pos != 5:				#ones digit
 
 			if x[pos]=='1':	
 				str_form = str_form+'one '
@@ -56,7 +60,7 @@ def numToWords(temp_num):
 				str_form = str_form+'hundred '
 
 			
-		else:									#yung may ty or -teen
+		else:									#tens digit
 			if pos == 2 or pos == 5:
 				if x[pos]== '1':
 					pos=pos+1
@@ -100,7 +104,7 @@ def numToWords(temp_num):
 
 				if pos == 2 or pos == 5:
 					pos= pos+1
-					if x[pos]=='1': 
+					if x[pos]=='1': 					#single digit after tens
 						str_form = str_form+'one '
 					elif x[pos]=='2': 
 						str_form=str_form+'two '
@@ -119,26 +123,29 @@ def numToWords(temp_num):
 					elif x[pos]=='9': 
 						str_form=str_form+'nine '
 					
-		pos = pos+1
+		pos = pos+1				#increment pos
 
-	print str_form	
+	print str_form				#print word representation
 
 	return
 
-
+"""
+	wordsToNum() accepts word(s) then prints its numerical equivalent
+	word - string input 
+"""
 def wordsToNum(word):
-	word = word.split()
+	word = word.split()		#word- list of words from word 
 	gen_num = 0		#total value
 	temp = 0		#current integer
-	mill_num=0
-	hund_thou = 0
-	hund = 0
-	wLen = len(word)
+	mill_num=0		#total million value of word
+	hund_thou = 0	#total hundred thousand value of word
+	hund = 0		#total hundred value of word
+	wLen = len(word)# number of words in word
 	flag=0		# is equal to 1 if there should be no more thousands
 	
 	i=0
 
-	while i < wLen:
+	while i < wLen:					#iterates through each word in word(list)
 		
 		if word[i] == 'one':
 			temp+=1
@@ -194,49 +201,66 @@ def wordsToNum(word):
 			temp += 80
 		elif word[i] == 'ninety':
 			temp += 90	
-		elif word[i] == 'million':
-			mill_num= temp*1000000
-			temp=0
-		elif word[i] == 'hundred':
+		elif word[i] == 'million':		#multiply previous number(temp) to 1000000
+			mill_num= temp*1000000		#place in mill_num
+			temp=0					
+		elif word[i] == 'hundred':		#multiply value in temp to 100
 			temp= temp*100
-		elif word[i] == 'thousand':
+		elif word[i] == 'thousand':		#multiply hund to 1000 then place in hund_thou 
 			hund_thou = hund*1000
-			hund=0
+			hund=0						
 			temp=0
-		hund = temp; 
-		i+=1	
+		hund = temp; 					
+		i+=1		#increment i then next iteration
 	
-	gen_num= mill_num+hund_thou+hund
-	print gen_num
+	gen_num= mill_num+hund_thou+hund 	#gen_num= accumulated value of millions, hundred thousands, and hundreds
+	print gen_num						#print total number
 	return
 
+"""
+	wordsToCurrency() accepts two inputs then generates string in number form with given currency
+	word - number in words inputed by the user
+	cur- currency given by the user
+"""
 def wordsToCurrency(word, cur):
-	if cur=='USD' or cur=='JPY' or cur == 'PHP':
-		sys.stdout.write(cur)
-		wordsToNum(word)
-	else:
+	if cur=='USD' or cur=='JPY' or cur == 'PHP':	#checks if currency given is valid
+		sys.stdout.write(cur)						#print currency
+		wordsToNum(word)							#print word in its numerical value
+	else:					
 		print 'Invalid!'
 
 	return
+
+"""
+	numberDelimitered() accepts three inputs then prints the number with a delimiter in the position given by the user
+	temp - number
+	delimiter - delimiter given by the user
+	jumps - # of jumps from the right
+"""	
 def numberDelimitered(temp, delimiter, jumps):
-	temp= str(temp)
-	rev=''
-	i=0
+	temp= str(temp)			#typecast temp to a string
+	rev=''					#will hold temp in reverse
+	i=0	
+	if len(temp) > 7:
+		print 'Invalid!: exceeded max no. of digits'
+		return
 
 	for i in range(0, len(temp)):			#reverse number input
 		rev=temp[i]+rev
 	
-	temp=''
-	for i in range(0, len(rev)):
-		if jumps== i:
-			temp= delimiter+temp
+	temp=''	
+	for i in range(0, len(rev)):			#iterates through all digits in rev
+		if jumps== i:						#if i == jumps
+			temp= delimiter+temp 			#concatenate delimiter with temp
 			
-		temp= rev[i]+temp
+		temp= rev[i]+temp 					#concatenate rev[i] with temp
 
 	print temp
 	return
 
-
+"""
+	prints menu and lets the user choose feature to be used
+"""
 print 'MENU'
 print '[1] Number to Word'
 print '[2] Word to Number'
@@ -245,27 +269,25 @@ print '[4] Number Delimitered '
 ch = input('choice: ')
 
 
-if(ch==1):
+if(ch==1):			#number to words
 	temp_num = raw_input('Enter number: ')
 	numToWords(temp_num);
 
-elif(ch==2):
+elif(ch==2):		#word to number
 	word= raw_input("Enter input: ")
 	wordsToNum(word); 
 
-elif(ch==3):
+elif(ch==3):		#number to currency
 	word= raw_input("Enter number in words: ")
 	cur= raw_input("Enter currency: ")
 
 	wordsToCurrency(word, cur)
 
-elif(ch==4):
+elif(ch==4):		#number delimitered
 	temp = raw_input('Enter number: ')
 	delimiter = raw_input('Enter delimiter: ')
 	jumps = input('Enter # of jumps: ')
 	numberDelimitered(temp, delimiter, jumps);
+
 else:
 	print 'Invalid!'
-
-
-
